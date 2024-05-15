@@ -1,19 +1,27 @@
-# data_clean_processing.py
+import pandas as pd
 
 class DataCleanProcessing:
     def __init__(self, data):
         self.data = data
-
+    
     def clean_missing_values(self):
-        # Fill missing values with median for numerical columns and mode for categorical columns
-        for column in self.data.columns:
-            if self.data[column].dtype == 'object':
-                self.data[column].fillna(self.data[column].mode()[0], inplace=True)
+        # Drop columns with more than 50% missing values
+        threshold = len(self.data) * 0.5
+        data_cleaned = self.data.dropna(thresh=threshold, axis=1)
+        
+        # Fill remaining missing values with the median for numerical columns or mode for categorical columns
+        for column in data_cleaned.columns:
+            if data_cleaned[column].dtype == 'object':
+                # Fill missing values with mode for categorical columns
+                mode = data_cleaned[column].mode()[0]
+                data_cleaned[column] = data_cleaned[column].fillna(mode)
             else:
-                self.data[column].fillna(self.data[column].median(), inplace=True)
-        return self.data
-
+                # Fill missing values with median for numerical columns
+                median = data_cleaned[column].median()
+                data_cleaned[column] = data_cleaned[column].fillna(median)
+        
+        self.data = data_cleaned
+        return data_cleaned
+    
     def verify_no_missing_values(self):
-        missing_values = self.data.isnull().sum().sum()
-        print(f'Total missing values after cleaning: {missing_values}')
-        return missing_values == 0
+        return self.data.isnull().sum().sum() == 0

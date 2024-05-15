@@ -1,27 +1,27 @@
+import unittest
+from src.data_clean_processing import DataCleanProcessing
 import pandas as pd
 
-class DataCleanProcessing:
-    def __init__(self, data):
-        self.data = data
-    
-    def clean_missing_values(self):
-        # Drop columns with more than 50% missing values
-        threshold = len(self.data) * 0.5
-        data_cleaned = self.data.dropna(thresh=threshold, axis=1)
-        
-        # Fill remaining missing values with the median for numerical columns or mode for categorical columns
-        for column in data_cleaned.columns:
-            if data_cleaned[column].dtype == 'object':
-                # Fill missing values with mode for categorical columns
-                mode = data_cleaned[column].mode()[0]
-                data_cleaned[column] = data_cleaned[column].fillna(mode)
-            else:
-                # Fill missing values with median for numerical columns
-                median = data_cleaned[column].median()
-                data_cleaned[column] = data_cleaned[column].fillna(median)
-        
-        self.data = data_cleaned
-        return data_cleaned
-    
-    def verify_no_missing_values(self):
-        return self.data.isnull().sum().sum() == 0
+class TestDataCleanProcessing(unittest.TestCase):
+
+    def setUp(self):
+        # Setup a small sample dataframe for testing
+        self.sample_data = pd.DataFrame({
+            'A': [1, 2, None, 4],
+            'B': ['a', 'b', 'c', None]
+        })
+        self.data_cleaner = DataCleanProcessing(self.sample_data)
+
+    def test_clean_missing_values(self):
+        cleaned_data = self.data_cleaner.clean_missing_values()
+        # Check if missing values are filled
+        self.assertFalse(cleaned_data.isnull().values.any())
+        self.assertEqual(cleaned_data.loc[2, 'A'], self.sample_data['A'].median())
+        self.assertEqual(cleaned_data.loc[3, 'B'], self.sample_data['B'].mode()[0])
+
+    def test_verify_no_missing_values(self):
+        self.data_cleaner.clean_missing_values()
+        self.assertTrue(self.data_cleaner.verify_no_missing_values())
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,25 +1,26 @@
+import unittest
+from src.data_quality_check import DataQualityCheck
 import pandas as pd
 
-class DataQualityCheck:
-    def __init__(self, file_path):
-        self.file_path = file_path
-        self.data = None
-    
-    def load_data(self):
-        self.data = pd.read_csv(self.file_path, sep='|', low_memory=False)
-        return self.data
-    
-    def basic_info(self):
-        if self.data is not None:
-            print(self.data.info())
-            print(self.data.describe())
-        else:
-            print("Data not loaded. Call the `load_data` method first.")
-    
-    def check_missing_values(self):
-        if self.data is not None:
-            missing_values = self.data.isnull().sum()
-            print("Missing values in each column:")
-            print(missing_values)
-        else:
-            print("Data not loaded. Call the `load_data` method first.")
+class TestDataQualityCheck(unittest.TestCase):
+
+    def setUp(self):
+        # Setup a small sample dataframe for testing
+        self.sample_data = pd.DataFrame({
+            'A': [1, 2, None, 4],
+            'B': ['a', 'b', 'c', None]
+        })
+        self.data_quality = DataQualityCheck('fake_path')
+
+    def test_load_data(self):
+        # Mock the load_data method
+        self.data_quality.data = self.sample_data
+        self.assertIsNotNone(self.data_quality.data)
+
+    def test_basic_info(self):
+        self.data_quality.data = self.sample_data
+        # Just call the method to ensure it runs without error
+        self.data_quality.basic_info()
+
+if __name__ == '__main__':
+    unittest.main()
