@@ -1,7 +1,5 @@
 # Insurance Claims Analysis and Predictive Modeling
 
-Sure! Here is the `README.md` content without the code parts:
-
 ```markdown
 # Insurance Claims Analysis
 
