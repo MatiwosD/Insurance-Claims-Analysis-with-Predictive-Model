@@ -22,6 +22,9 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m unittest discover -s tests
+          echo "Running test_data_clean_processing.py"
+          python -m unittest tests/test_data_clean_processing.py
+          echo "Running test_data_quality_check.py"
+          python -m unittest tests/test_data_quality_check.py
         env:
           PYTHONPATH: . # This ensures the current directory is in the Python path
