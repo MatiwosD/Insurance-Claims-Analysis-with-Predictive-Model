@@ -75,18 +75,11 @@ pytest tests/
 
 This project includes unit tests that can be integrated with CI/CD pipelines to ensure code quality and reliability.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
 ## Acknowledgments
 
-- This project uses pandas for data manipulation and seaborn for data visualization.
 - Special thanks to the 10 Academy for the dataset and project inspiration.
 ```
-
-Copy and paste this content into your `README.md` file and commit it to your GitHub repository. Adjust any paths, URLs, or other specific details as needed to fit your project's specifics.
