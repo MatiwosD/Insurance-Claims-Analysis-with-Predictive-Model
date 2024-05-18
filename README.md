@@ -1,9 +1,7 @@
+```markdown
 # Insurance Claims Analysis and Predictive Modeling
 
-```markdown
-# Insurance Claims Analysis
-
-This project aims to perform a detailed analysis of insurance claims data. The analysis focuses on data quality checks, data cleaning, and exploratory data analysis (EDA) to derive meaningful insights that can help in improving marketing strategies, attracting new clients, and optimizing insurance products.
+This project aims to perform a detailed analysis of insurance claims data. The analysis focuses on data quality checks, data cleaning, exploratory data analysis (EDA), A/B hypothesis testing, and predictive modeling to derive meaningful insights that can help in improving marketing strategies, attracting new clients, and optimizing insurance products.
 
 ## Project Structure
 
@@ -12,13 +10,17 @@ insurance-claims-analysis/
 ├── data/
 │   └── MachineLearningRating_v3.txt
 ├── notebooks/
-│   └── EDA.ipynb
+│   ├── EDA.ipynb
+│   └── Hypothesis_Testing and Modeling.ipynb
 ├── src/
 │   ├── data_quality_check.py
-│   └── data_clean_processing.py
+│   ├── data_clean_processing.py
+│   ├── data_loader.py
+│   └── modeling.py
 └── tests/
     ├── test_data_quality_check.py
-    └── test_data_clean_processing.py
+    ├── test_data_clean_processing.py
+    └── test_modeling.py
 └── README.md
 ```
 
@@ -43,6 +45,42 @@ To run this project, you need to have Python installed. It is recommended to use
    pip install -r requirements.txt
    ```
 
+## Data Version Control (DVC)
+
+### Installation
+
+1. Install DVC:
+   ```bash
+   pip install dvc
+   ```
+
+2. Initialize DVC in your project directory:
+   ```bash
+   dvc init
+   ```
+
+3. Set up local remote storage:
+   ```bash
+   mkdir /path/to/your/local/storage
+   dvc remote add -d localstorage /path/to/your/local/storage
+   ```
+
+4. Add your data and track it with DVC:
+   ```bash
+   dvc add data/MachineLearningRating_v3.txt
+   ```
+
+5. Commit the .dvc files to version control:
+   ```bash
+   git add data/MachineLearningRating_v3.txt.dvc .gitignore
+   git commit -m "Add data file to DVC"
+   ```
+
+6. Push data to the local remote:
+   ```bash
+   dvc push
+   ```
+
 ## Data Quality Checks and Data Cleaning
 
 ### Data Quality Checks
@@ -60,9 +98,33 @@ The EDA is performed in `notebooks/EDA.ipynb`, which includes:
 - Generating a correlation matrix
 - Visualizing the correlation matrix with a heatmap
 
+## A/B Hypothesis Testing
+
+The A/B hypothesis testing is detailed in `notebooks/Hypothesis_Testing_and_Modeling.ipynb`, including:
+- Data preparation and segmentation
+- Conducting chi-squared tests for categorical data
+- Conducting t-tests for numerical data
+- Interpreting the p-values and conducting power analysis
+
+### Hypotheses Tested:
+1. No risk differences across provinces
+2. No risk differences between zip codes
+3. No significant margin differences between zip codes
+4. No significant risk differences between women and men
+
+## Predictive Modeling
+
+The predictive modeling is also detailed in `notebooks/Hypothesis_Testing_and_Modeling.ipynb`, which includes:
+- Data preparation and feature engineering
+- Encoding categorical data
+- Train-test split
+- Model building and evaluation for Linear Regression, Decision Trees, Random Forests, and XGBoost
+- Model evaluation using MAE, MSE, RMSE, and R² score
+- Feature importance analysis for Random Forest and XGBoost
+
 ## Unit Tests
 
-Unit tests for data quality checks and data cleaning are provided in the `tests` directory. These tests ensure the robustness and correctness of the implemented methods.
+Unit tests for data quality checks, data cleaning, and modeling are provided in the `tests` directory. These tests ensure the robustness and correctness of the implemented methods.
 
 To run the tests, use the following command:
 ```bash
@@ -81,3 +143,9 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 - Special thanks to the 10 Academy for the dataset and project inspiration.
 ```
+
+### Documentation
+Encouraging detailed documentation in the code and report writing is crucial. Ensure that all classes and methods have appropriate docstrings, and use comments to explain non-trivial code sections.
+
+### Conclusion
+By integrating DVC for data version control, performing thorough data quality checks and cleaning, conducting exploratory data analysis, executing A/B hypothesis testing, and building robust predictive models, this project provides a comprehensive approach to understanding and leveraging insurance claims data for strategic business decisions.
